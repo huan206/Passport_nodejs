@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div class="form">
+      <form class="login-form" id="login_div" action="/verify" method="POST">
+        <h2><%= title %></h2> 
+        <h2><%= account.email %></h2> 
+        <input class="input_hide" type="text" placeholder="Username" name="username" id="name_signup" value=<%=account.username  %> />
+        <input class="input_hide" type="email" placeholder="Email address" name="email" id="email_signup" value=<%=account.email  %> />
+        <input class="input_hide" type="password" placeholder="Password" name="password" id="password_signup" value=<%=account.password  %> />
+        <input
+          type="text"
+          name="code"
+          placeholder="Code"
+          id="code"
+          required
+        />
+        <button type="submit" id="login">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

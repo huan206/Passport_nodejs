@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div class="form">
+      <form class="signup-form" id="signup_div" action="/signup" method="POST" >
+        <h2><%= title %></h2>
+        <input type="text" placeholder="Username" name="username" id="name_signup" />
+        <input type="email" placeholder="Email address" name="email" id="email_signup" />
+        <input type="password" placeholder="Password" name="password" id="password_signup" />
+        <button type="submit" id="sighUp">Create</button>
+        <br />
+      <a href="/login"><button type="button" id="login_btn">Login</button></a>
+    </form>
+    </div>
+  </body>
+</html>

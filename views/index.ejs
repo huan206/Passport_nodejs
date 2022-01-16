@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <div class="loggedin" id="user_div">
+      <h2>This is <%= title %></h2>
+      <p id="user_para">Welcome <%= username %></p>
+      <br />
+      <!-- <button id="sendMail">Verification</button>
+      <br /> -->
+      <!-- <a id="chat" href="/chat.html"
+        ><button id="chat" onclick="chat()">Go to chat</button></a>
+      <br /> -->
+      <a href="/logout"><button id="logout">Logout</button></a>
+    </div>
+  </body>
+  <script type="text/javascript">
+    if (window.location.href.indexOf("#_=_") > 0) {
+      window.location = window.location.href.replace(/#.*/, "");
+    }
+  </script>
+</html>

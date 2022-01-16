@@ -1,0 +1,71 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+.login-form, .signup-form, .loggedin{
+  width: 20%;
+  margin: auto;
+  margin-top: 150px;
+  font-size: 16px;
+}
+
+.login-form input, .signup-form input {
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  background: #fff;
+  padding: 15px;
+  outline: none;
+  width: 100%;
+  margin-bottom: 20px;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+}
+.login-form input:focus, .signup-form input:focus {
+    border: 1px solid #777;
+  }
+  
+.login-form button, .signup-form button,
+.loggedin button {
+  background: #5d8ffc;
+  color: #fff;
+  border: 1px solid #5d8ffc;
+  border-radius: 15px;
+  padding: 15px;
+  display: block;
+  width: 100%;
+  transition: 0.3s;
+  text-decoration: none;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+}
+.loggedin a{
+  text-decoration: none;
+}
+.login-form button:hover,
+.signup-form button:hover,
+.loggedin button:hover {
+  background: #fff;
+  color: #5d8ffc;
+  border: 1px solid #5d8ffc;
+  cursor: pointer;
+}
+.input_hide{
+  display: none !important;
+}
+a{
+  text-decoration: none;
+}
+small{
+  display:block;
+  margin-bottom: 20px;
+  color:red;
+  font-style: italic;
+}
