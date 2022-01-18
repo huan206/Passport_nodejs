@@ -7,57 +7,56 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
     />
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v12.0&appId=1721561728034335&autoLogAppEvents=1"
+      nonce="CyHPQs3Z"
+    ></script>
   </head>
   <body>
     <div class="form">
       <form class="login-form" id="login_div" action="/login" method="POST">
         <h2><%= title %></h2>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          required
-        />
+        <input type="text" name="username" placeholder="Username" required />
         <input
           type="password"
           name="password"
           placeholder="Password"
           required
         />
-        <% if (hasMessages) { %>
-          <% messages.forEach(function(message){ %>
-            <small><%= message %></small>
-          <% }); %>
-        <% } %>
-        <button type="submit" id="login">Login</button>
-        <br />
-        <a href="/login/google"
-          ><button
-            class="btn btn-block btn-social btn-google"
-            id="btnGoogle"
-            type="button"
+        <% if (hasMessages) { %> <% messages.forEach(function(message){ %>
+        <small><%= message %></small>
+        <% }); %> <% } %>
+        <div class="box">
+          <button type="submit" id="login">Login</button>
+          <a href="/login/google">
+            <button type="button" id="login-with-google-btn">
+              Login with Google
+            </button>
+          </a>
+          <a href="/login/facebook" id="fb">
+            <div
+              class="fb-login-button"
+              data-width="285px"
+              data-size="large"
+              data-button-type="login_with"
+              data-layout="default"
+              data-auto-logout-link="false"
+              data-use-continue-as="false"
+            >
+              Login with Facebook
+            </div>
+          </a>
+          <a href="/signup"
+            ><button type="button" id="register_btn">Register</button></a
           >
-            Login with Google
-          </button></a
-        >
-        <br>
-        <a href="/login/facebook"
-          ><button
-            class="btn btn-block btn-social btn-google"
-            id="btnFacebook"
-            type="button"
+          <a href="/sendmail_forget"
+            ><button type="button" id="forget_btn">Forget Password</button></a
           >
-            Login with Facebook
-          </button></a
-        >
-        <br />
-        <a href="/signup"
-          ><button type="button" id="register_btn">Sign Up</button></a
-        >
-        <br>
-        <a href="/sendmail_forget"
-          ><button type="button" id="forget_btn">Forget Password</button></a
-        >
+        </div>
       </form>
     </div>
   </body>
