@@ -24,6 +24,11 @@
           placeholder="Password"
           required
         />
+        <% if (hasMessages) { %>
+          <% messages.forEach(function(message){ %>
+            <small><%= message %></small>
+          <% }); %>
+        <% } %>
         <button type="submit" id="login">Login</button>
         <br />
         <a href="/login/google"

@@ -15,9 +15,12 @@
         <input type="text" placeholder="Username" name="username" id="name_signup" />
         <input type="email" placeholder="Email address" name="email" id="email_signup" />
         <input type="password" placeholder="Password" name="password" id="password_signup" />
+        <% if(err){ %> 
+          <small ><%= err %> </small>
+        <%} %>
         <button type="submit" id="sighUp">Create</button>
         <br />
-      <a href="/login"><button type="button" id="login_btn">Login</button></a>
+        <a href="/login"><button type="button" id="login_btn">Login</button></a>
     </form>
     </div>
   </body>

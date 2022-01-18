@@ -36,19 +36,23 @@ passport.deserializeUser(function (id, done) {
 
 passport.use(new LocalStrategy(
     function (username, password, done) {
-
         User.findOne({
             username : username
         }).then(function (user) {
-            bcrypt.compare(password, user.password, function (err, result) {
-                if (err) {
-                    return done(err);
-                }
-                if (!result) {
-                    return done(null, false, { message: 'Incorrect username or password' });
-                }
-                return done(null, user);
-            })
+            if (user == null) {
+                return done(null, false, { message: 'The username does not exist' })
+            }
+            else {
+                bcrypt.compare(password, user.password, function (err, result) {
+                    if (err) {
+                        return done(err);
+                    }
+                    if (!result) {
+                        return done(null, false, { message: 'Incorrect password' });
+                    }
+                    return done(null, user);
+                })
+            }
         }).catch(function (err) {
             return done(err);
         })
@@ -158,7 +162,7 @@ exports.signup = [
 
         if (!errors.isEmpty()) {
             console.log(errors);
-            res.render('register.ejs', { title: 'Create Account', account: req.body, errors: errors.array() });
+            res.render('register.ejs', { title: 'Create Account', account: req.body, err: errors.array() });
             return;
         }
         else {
@@ -167,13 +171,13 @@ exports.signup = [
             })
             .then(result =>{
                 if(result){
-                    res.redirect('/signup')
+                    res.render('register.ejs', {title: 'Create Account', err: 'The username or email does exist'})
                 }
                 else{
                     code = Math.floor(Math.random() * (999999 - 100000)) + 100000;
                     console.log(code);
                     // mailer.sendMail(req.body.email, code);
-                    res.render('verifyemail.ejs', { title: 'Verify Account', account: req.body })
+                    res.render('verifyemail.ejs', { title: 'Verify Account', account: req.body, err: undefined })
                 }
             })
             .catch(err=>{
@@ -204,9 +208,8 @@ exports.createAccount = (req, res, next) => {
         })
     }
     else {
-        res.render('verifyemail.ejs', { title: 'Verify Account', account: req.body })
+        res.render('verifyemail.ejs', { title: 'Verify Account', account: req.body, err:'Incorrect code' })
     }
-    // Create an User object with escaped and trimmed data.
 }
 
 exports.sendmailFogot = [
@@ -216,7 +219,7 @@ exports.sendmailFogot = [
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            res.render('register.ejs', { title: 'Create Account', account: req.body, errors: errors.array() });
+            res.render('register.ejs', { title: 'Create Account', account: req.body, err: errors.array() });
             return;
         }
         else {
@@ -229,7 +232,7 @@ exports.sendmailFogot = [
                         code = Math.floor(Math.random() * (999999 - 100000)) + 100000;
                         console.log(code);
                         // mailer.sendMail(req.body.email, code);
-                        res.render('verifyforgot.ejs', { title: 'Verify Account', account: result })
+                        res.render('verifyforgot.ejs', { title: 'Verify Account', account: result, err: undefined})
                     }
                     else{
                         res.render('forgotpassword.ejs',{title: 'Forgot Password', err:'The email does not exist'})
@@ -242,7 +245,6 @@ exports.sendmailFogot = [
 ];
 
 exports.updatePassword = (req, res, next) => {
-    console.log(req.body);
     if (req.body.code == code && req.body.confirm == req.body.password) {
         bcrypt.hash(req.body.password, 10, function (err, hash) {
             User.findByIdAndUpdate(req.body.id, { $set: { password: hash } }, {}, function (err) {
@@ -253,6 +255,6 @@ exports.updatePassword = (req, res, next) => {
         })
     }
     else {
-        res.render('verifyforgot.ejs', { title: 'Verify Account', account: req.body })
+        res.render('verifyforgot.ejs', { title: 'Verify Account', account: req.body, err:'Incorrect code or password'})
     }
 };

@@ -16,6 +16,9 @@
         <input class="input_hide" type="text" name="id" value=<%=account.id %> />
         <input type="password" placeholder="Password" name="password" id="password_new" />
         <input type="password" placeholder="Confirm password" name="confirm" id="confirm" />
+          <% if(err){ %> 
+            <small ><%= err %> </small>
+          <%} %>
         <button type="submit" id="login">Submit</button>
       </form>
     </div>
