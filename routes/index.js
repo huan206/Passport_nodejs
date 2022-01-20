@@ -14,7 +14,7 @@ router.post('/login',
   });
 
 router.get('/signup', function (req, res, next) {
-  res.render('register.ejs', { title: "Create Account" });
+  res.render('register.ejs', { title: "Create Account", err: undefined });
 });
 
 router.post('/signup', user_controller.signup);
@@ -45,7 +45,14 @@ router.get('/auth/facebook/callback',
     // Successful authentication, redirect home.
     res.redirect('/');
   });
-  
+
+router.get('/login/github', passport.authenticate('github'));
+
+router.get('/login/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login', failureMessage: true }),
+  function (req, res) {
+    res.redirect('/');
+  }); 
 router.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/login');

@@ -4,6 +4,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var FaceBookStrategy = require('passport-facebook').Strategy;
+var GitHubStrategy = require('passport-github').Strategy;
 var mailer = require('../utils/email');
 // var TwitterStrategy = require('passport-twitter');
 var bcrypt = require('bcrypt');
@@ -115,17 +116,34 @@ passport.use(new FaceBookStrategy({
     }
 ));
 
-// passport.use(new TwitterStrategy({
-//     consumerKey: TWITTER_CONSUMER_KEY,
-//     consumerSecret: TWITTER_CONSUMER_SECRET,
-//     callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
-//   },
-//   function(token, tokenSecret, profile, cb) {
-//     User.findOrCreate({ twitterId: profile.id }, function (err, user) {
-//       return cb(err, user);
-//     });
-//   }
-// ));
+passport.use(new GitHubStrategy({
+    clientID:'7c6c95a80119c7c6b9ea',
+    clientSecret:'b2d50f893c998eef12c6b7f0ab7a2391d0f3940a',
+    callbackURL:'http://localhost:3000/login/github/callback'
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOne({ githubID: profile.id })
+              .then(result => {
+                  if (result == null) {
+                      var user = new User(
+                          {
+                              username: profile.username,
+                              // email: profile.emails[0].value,
+                              githubID: profile.id
+                          });
+                      user.save();
+                      return cb(null, user)
+                  }
+                  else {
+                      return cb(null, result)
+                  }
+              })
+              .catch(err => {
+                  console.log(err);
+              })
+  }
+  ));
+  
 
 exports.checkAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
