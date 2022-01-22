@@ -14,40 +14,39 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">  
   </head>
   <body>
-      <form class="form" id="login_div" action="/login" method="POST">
-        <h2><%= title %></h2>
-        <input type="text" name="username" placeholder="Username" required />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-        />
-        <% if (hasMessages) { %> <% messages.forEach(function(message){ %>
-        <small><%= message %></small>
-        <% }); %> <% } %>
+      <div class="form">
         <div class="row">
-          <div class="left col-5">
-            <button type="submit" id="login">Login</button>
-            <a href="/signup"
-              ><button type="button" id="register_btn">Register</button></a>
-            <a href="/sendmail_forget"
-              ><button type="button" id="forget_btn">Forget Password</button></a>
-          </div>
-          <div class="col-2"></div>
-          <div class="right col-5">
-            <a class="btn btn-block btn-social btn-google" href="/login/google">
-              <span class = "fa fa-google"> </span> Login with Google
-            </a>
-            <a class="btn btn-block btn-social btn-facebook" href="/login/facebook">
-              <span class = "fa fa-facebook"> </span> Login with Facebook
-            </a>
-            <a class="btn btn-block btn-social btn-github" href="/login/github">
-              <span class = "fa fa-github"> </span> Login with Github
-            </a>
-          </div>
+          <h2><%= title %></h2>
+        <form class="col-6" id="login_div" action="/login" method="POST">
+          <input type="text" name="username" placeholder="Username" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <% if (hasMessages) { %> <% messages.forEach(function(message){ %>
+          <small><%= message %></small>
+          <% }); %> <% } %>
+            <div class="left">
+              <button type="submit" id="login">Login</button>
+              <div class="row" >
+                <a class="btn-sub col-6" href="/signup">Register</a>
+                <a class="btn-sub col-6" style="display: flex; justify-content: right;" href="/sendmail_forget">Forget Password</a>
+              </div>
+            </div>
+        </form>
+        <div class="right col-6">
+          <a class="btn btn-block btn-social btn-google" href="/login/google">
+            <span class = "fa fa-google"> </span> Login with Google
+          </a>
+          <a class="btn btn-block btn-social btn-facebook" href="/login/facebook">
+            <span class = "fa fa-facebook"> </span> Login with Facebook
+          </a>
+          <a class="btn btn-block btn-social btn-github" href="/login/github">
+            <span class = "fa fa-github"> </span> Login with Github
+          </a>
         </div>
-      </form>
-    </div>
+      </div>
   </body>
 </html>

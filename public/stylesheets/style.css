@@ -4,40 +4,38 @@ body {
 }
 
 a {
-  color: #00b7ff;
+  color: #727272;
   text-decoration: none !important;
 }
 
 .form,
-.form,
 .loggedin {
-  width: 40%;
+  width: 50%;
   margin: auto;
   padding: 25px;
   font-size: 16px;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
-.form input,
 .form input {
   display: block;
   border: 1px solid #ccc;
   border-radius: 5px;
   background: #fff;
-  padding: 10px; 
+  padding: 6px; 
   outline: none;
+  font-size: 14px;
+  line-height: 20px;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   transition: 0.3s;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
 }
-.form input:focus,
 .form input:focus {
   border: 1px solid #777;
 }
 
-.form button,
 .form button,
 .loggedin button {
   font-size: 14px;
@@ -60,7 +58,6 @@ a {
 .loggedin a {
   text-decoration: none;
 }
-.form button:hover,
 .form button:hover,
 .loggedin button:hover {
   background: #fff;
@@ -85,4 +82,10 @@ small {
 }
 .left, .right{
   padding: 0 !important;
+}
+.btn{
+  margin-bottom: 10px !important;
+}
+.btn-sub{
+  font-size: 13px;
 }

@@ -11,6 +11,7 @@
 
   </head>
   <body>
+    <!-- <div class="container"> -->
       <form class="form" id="signup_div" action="/signup" method="POST" >
         <h2><%= title %></h2>
         <input type="text" placeholder="Username" name="username" id="name_signup" />
@@ -21,8 +22,9 @@
         <%} %>
         <div class="box">
           <button type="submit" id="sighUp">Create</button>
-          <a href="/login"><button type="button" id="login_btn">Login</button></a>
+          <a class="btn-sub" style="display: flex; justify-content: center;" href="/login">Login</a>
         </div>
-    </form>
+      </form>
+    <!-- </div> -->
   </body>
 </html>
