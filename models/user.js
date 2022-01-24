@@ -8,7 +8,8 @@ var UserSchema = new Schema(
     email: {type: String, required: false, maxLength: 100},
     password: {type: String, required: false, minLength: 6},
     googleID: {type: String, required: false},
-    facebookID: {type: String, required: false}
+    facebookID: {type: String, required: false},
+    githubID: {type: String, required: false}
   }
 );
 
