@@ -63,7 +63,7 @@ passport.use(new LocalStrategy(
 passport.use(new GoogleStrategy({
     clientID: '781009823760-7ekibvct2t9h9gus4t3cifc2mshljp0k.apps.googleusercontent.com',
     clientSecret: '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',
-    callbackURL: "/auth/google/callback"
+    callbackURL: "https://library-myapplication.herokuapp.com/auth/google/callback"
 },
     function (accessToken, refreshToken, profile, cb) {
         User.findOne({ googleID: profile.id })
