@@ -6,7 +6,6 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var FaceBookStrategy = require('passport-facebook').Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
 var mailer = require('../utils/email');
-// var TwitterStrategy = require('passport-twitter');
 var bcrypt = require('bcrypt');
 var code;
 const { body, validationResult } = require('express-validator');
@@ -128,7 +127,6 @@ passport.use(new GitHubStrategy({
                       var user = new User(
                           {
                               username: profile.username,
-                              // email: profile.emails[0].value,
                               githubID: profile.id
                           });
                       user.save();
@@ -194,7 +192,7 @@ exports.signup = [
                 else{
                     code = Math.floor(Math.random() * (999999 - 100000)) + 100000;
                     console.log(code);
-                    // mailer.sendMail(req.body.email, code);
+                    mailer.sendMail(req.body.email, code);
                     res.render('verifyemail.ejs', { title: 'Verify Account', account: req.body, err: undefined })
                 }
             })
@@ -249,7 +247,7 @@ exports.sendmailFogot = [
                     if(result){
                         code = Math.floor(Math.random() * (999999 - 100000)) + 100000;
                         console.log(code);
-                        // mailer.sendMail(req.body.email, code);
+                        mailer.sendMail(req.body.email, code);
                         res.render('verifyforgot.ejs', { title: 'Verify Account', account: result, err: undefined})
                     }
                     else{
