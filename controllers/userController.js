@@ -117,9 +117,9 @@ passport.use(new FaceBookStrategy({
 ));
 
 passport.use(new GitHubStrategy({
-    clientID:'7c6c95a80119c7c6b9ea',
-    clientSecret:'b2d50f893c998eef12c6b7f0ab7a2391d0f3940a',
-    callbackURL:'https://library-myapplication.herokuapp.com/login/github/callback'
+    clientID:'30652d0be1f68699a02c',
+    clientSecret:'314916719c3b4291014f8da71e1475fedd8a9f3f',
+    callbackURL:'https://library-myapplication.herokuapp.com/auth/github/callback'
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOne({ githubID: profile.id })
