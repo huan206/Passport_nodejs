@@ -8,6 +8,18 @@ a {
   text-decoration: none !important;
 }
 
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
 .form,
 .loggedin {
   width: 50%;
