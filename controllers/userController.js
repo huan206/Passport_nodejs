@@ -213,7 +213,7 @@ exports.signup = [
                     else {
                         code = Math.floor(Math.random() * (999999 - 100000)) + 100000;
                         var subject = "Email for verify"
-                        var view = "<h1>Hello</h1><p>This is code for verify your account: "+ code +" </p>";
+                        var view = "<h2>Hello</h2><p>This is code for verify your account: "+ code +" </p>";
                         mailer.sendMail(req.body.email, subject, view);
                         res.render('verifyemail.ejs', { title: 'Verify Account', account: req.body, err: undefined })
                     }
@@ -242,7 +242,7 @@ exports.createAccount = (req, res, next) => {
                     return next(err);
                 }
                 var subject = "Notice of successful registrationThanks "
-                var view = "<h1>Welcome</h1><p>You have successfully registered</p>";
+                var view = "<h2>Welcome</h2><p>You have successfully registered</p>";
                 mailer.sendMail(req.body.email, subject, view);
                 res.redirect("/login");
             });
@@ -272,7 +272,7 @@ exports.sendmailFogot = [
                     if (result) {
                         code = Math.floor(Math.random() * (999999 - 100000)) + 100000;
                         var subject = "Email forgot password"
-                        var view = "<h1>Hello</h1><p>This is code for reset password: "+ code +" </p>";
+                        var view = "<h2>Hello</h2><p>This is code for reset password: "+ code +" </p>";
                         mailer.sendMail(req.body.email, subject, view);
                         res.render('verifyforgot.ejs', { title: 'Verify Account', account: result, err: undefined })
                     }
