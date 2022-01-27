@@ -23,7 +23,6 @@
      html: "<h1>Welcome</h1><p>This is code for verify: "+ code +" </p>"  
    }
    console.log("sended");
-   // hàm transporter.sendMail() này sẽ trả về cho chúng ta một Promise
    return transporter.sendMail(options)
  }
  

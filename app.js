@@ -21,7 +21,6 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: false, save
 app.use(function (req, res, next) {
   var msgs = req.session.messages || [];
   var err = req.session.errors || [];
-  res.locals.success_msg = req.flash('success_msg');
   res.locals.messages = msgs;
   res.locals.errors = err;
   res.locals.hasMessages = !!msgs.length;
