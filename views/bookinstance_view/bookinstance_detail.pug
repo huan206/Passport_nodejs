@@ -20,7 +20,8 @@ block content
     p #[strong Due back:] #{bookinstance.due_back}
   
   hr
-  p
-    a(href=bookinstance.url+'/delete') Delete bookinstance
-  p
-    a(href=bookinstance.url+'/update') Update bookinstance
+  if role == "admin"
+    p
+      a(href=bookinstance.url+'/delete') Delete bookinstance
+    p
+      a(href=bookinstance.url+'/update') Update bookinstance

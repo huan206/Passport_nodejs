@@ -1,9 +1,9 @@
 var Genre = require('../models/genre');
 var Book = require('../models/book');
 var BookInstance = require('../models/bookinstance');
-
 var async = require('async');
 const { body,validationResult } = require("express-validator");
+const storage = require('node-persist');
 
 // Display list of all Genre.
 exports.genre_list = function(req, res) {
@@ -12,7 +12,13 @@ exports.genre_list = function(req, res) {
     .exec(function (err, list_genres) {
       if (err) { return next(err); }
       //Successful, so render
-      res.render('./genre_view/genre_list.pug', { title: 'Genre List', genre_list: list_genres });
+      storage.getItem('role').then(r =>{
+        res.render('./genre_view/genre_list.pug', { title: 'Genre List', genre_list: list_genres, role:r });
+      })
+      .catch(err=>{
+        res.render('./genre_view/genre_list.pug', { title: 'Genre List', genre_list: list_genres });
+      })
+      
     });
 };
 
@@ -37,13 +43,30 @@ exports.genre_detail = function(req, res) {
             return next(err);
         }
         // Successful, so render
-        res.render('./genre_view/genre_detail.pug', { title: 'Genre Detail', genre: results.genre, genre_books: results.genre_books } );
+        storage.getItem('role').then(r =>{
+          res.render('./genre_view/genre_detail.pug', { title: 'Genre Detail', genre: results.genre, genre_books: results.genre_books,role:r } );
+      })
+      .catch(err=>{
+          res.render('./genre_view/genre_detail.pug', { title: 'Genre Detail', genre: results.genre, genre_books: results.genre_books } );
+      })
+        
     });
 };
 
 // Display Genre create form on GET.
 exports.genre_create_get = (req, res)=>{
-    res.render('./genre_view/genre_form.pug', { title: 'Create Genre' });
+    
+    storage.getItem('role').then(r =>{
+      if(r=="admin"){
+        res.render('./genre_view/genre_form.pug', { title: 'Create Genre' });
+      }
+      else{
+          res.redirect('/catalog')
+      }
+  })
+  .catch(err=>{
+      res.redirect('/catalog')
+  })
 }
 // Handle Genre create on POST.
 exports.genre_create_post = [

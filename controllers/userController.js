@@ -9,6 +9,10 @@ var mailer = require('../utils/email');
 var bcrypt = require('bcrypt');
 var code;
 const { check, body, validationResult } = require('express-validator');
+const storage = require('node-persist');
+ 
+//you must first call storage.init
+storage.init({ttl:false});
 
 passport.serializeUser(function (user, done) {
     if (user.googleID) {
@@ -72,7 +76,8 @@ passport.use(new GoogleStrategy({
                         {
                             username: profile.displayName,
                             email: profile.emails[0].value,
-                            googleID: profile.id
+                            googleID: profile.id,
+                            role:"user"
                         });
                     user.save();
                     return cb(null, user)
@@ -100,7 +105,8 @@ passport.use(new FaceBookStrategy({
                     var user = new User(
                         {
                             username: profile.displayName,
-                            facebookID: profile.id
+                            facebookID: profile.id,
+                            role:"user"
                         });
                     user.save();
                     return cb(null, user)
@@ -127,7 +133,8 @@ passport.use(new GitHubStrategy({
                     var user = new User(
                         {
                             username: profile.username,
-                            githubID: profile.id
+                            githubID: profile.id,
+                            role:"user"
                         });
                     user.save();
                     return cb(null, user)
@@ -159,7 +166,8 @@ exports.checkNotAuthenticated = (req, res, next) => {
 }
 
 exports.homepage = function (req, res) {
-    res.render('index.ejs', { title: 'Homepage', username: req.user.username });
+    storage.setItem('role',req.user.role)
+    res.render('index.ejs', { title: 'Homepage', username: req.user.username, role: req.user.role });
 };
 
 exports.login = function (req, res) {
@@ -234,7 +242,8 @@ exports.createAccount = (req, res, next) => {
                 {
                     username: req.body.username,
                     email: req.body.email,
-                    password: hash
+                    password: hash,
+                    role:"user"
                 });
 
             user.save(function (err) {

@@ -2,9 +2,10 @@ var Book = require('../models/book');
 var Author = require('../models/author');
 var Genre = require('../models/genre');
 var BookInstance = require('../models/bookinstance');
-
 var async = require('async');
 const { body,validationResult } = require('express-validator'); 
+const storage = require('node-persist');
+
 exports.index = function(req, res) {
     async.parallel({
         book_count: function(callback) {
@@ -23,7 +24,12 @@ exports.index = function(req, res) {
             Genre.countDocuments({}, callback);
         }
     }, function(err, results) {
-        res.render('index.pug', { title: 'Local Library Home', error: err, data: results });
+        storage.getItem('role').then(r =>{
+            res.render('index.pug', { title: 'Local Library Home', error: err, data: results, role: r});
+        })
+        .catch(err=>{
+            res.render('index.pug', { title: 'Local Library Home', error: err, data: results});
+        })
     });
 };
 
@@ -36,7 +42,13 @@ exports.book_list = function(req, res) {
     .exec(function (err, list_books) {
       if (err) { return next(err); }
       //Successful, so render
-      res.render('./book_view/book_list.pug', { title: 'Book List', book_list: list_books });
+      
+    storage.getItem('role').then(r =>{
+        res.render('./book_view/book_list.pug', { title: 'Book List', book_list: list_books,role:r });
+    })
+    .catch(err=>{
+        res.render('./book_view/book_list.pug', { title: 'Book List', book_list: list_books });
+    })
     // res.json({ book_list: list_books})
     });
 };
@@ -64,7 +76,13 @@ exports.book_detail = function(req, res) {
             return next(err);
         }
         // Successful, so render.
-        res.render('./book_view/book_detail.pug', { title: results.book.title, book: results.book, book_instances: results.book_instance } );
+        storage.getItem('role').then(r =>{
+            res.render('./book_view/book_detail.pug', { title: results.book.title, book: results.book, book_instances: results.book_instance,role:r } );
+        })
+        .catch(err=>{
+            res.render('./book_view/book_detail.pug', { title: results.book.title, book: results.book, book_instances: results.book_instance } );
+        })
+        
     });
 };
 
@@ -79,7 +97,17 @@ exports.book_create_get = function(req, res) {
         },
     }, function(err, results) {
         if (err) { return next(err); }
-        res.render('./book_view/book_form.pug', { title: 'Create Book', authors: results.authors, genres: results.genres });
+        storage.getItem('role').then(r =>{
+            if(r=="admin"){
+                res.render('./book_view/book_form.pug', { title: 'Create Book', authors: results.authors, genres: results.genres });
+            }
+            else{
+                res.redirect('/catalog')
+            }
+        })
+        .catch(err=>{
+            res.redirect('/catalog')
+        })
     });
 };
 

@@ -2,6 +2,7 @@ var async = require('async');
 var Author = require('../models/author');
 var Book = require('../models/book');
 var BookInstance = require('../models/bookinstance');
+const storage = require('node-persist');
 
 const { body,validationResult } = require('express-validator');
 // Display list of all Authors.
@@ -12,7 +13,13 @@ exports.author_list = function(req, res) {
       .exec(function (err, list_authors) {
         if (err) { return next(err); }
         //Successful, so render
-        res.render('./author_view/author_list.pug', { title: 'Author List', author_list: list_authors });
+        storage.getItem('role').then(r =>{
+            res.render('./author_view/author_list.pug', { title: 'Author List', author_list: list_authors,role:r });
+        })
+        .catch(err=>{
+            res.render('./author_view/author_list.pug', { title: 'Author List', author_list: list_authors });
+        })
+        
       });
 };
 
@@ -35,13 +42,30 @@ exports.author_detail = function(req, res) {
             return next(err);
         }
         // Successful, so render.
-        res.render('./author_view/author_detail.pug', { title: 'Author Detail', author: results.author, author_books: results.authors_books } );
+        storage.getItem('role').then(r =>{
+            res.render('./author_view/author_detail.pug', { title: 'Author Detail', author: results.author, author_books: results.authors_books,role:r } );
+        })
+        .catch(err=>{
+            res.render('./author_view/author_detail.pug', { title: 'Author Detail', author: results.author, author_books: results.authors_books } );
+        })
+        
     });
 };
 
 // Display Author create form on GET.
 exports.author_create_get = function(req, res) {
-    res.render('./author_view/author_form.pug', { title: 'Create Author'});
+   
+    storage.getItem('role').then(r =>{
+        if(r=="admin"){
+            res.render('./author_view/author_form.pug', { title: 'Create Author'});
+        }
+        else{
+            res.redirect('/catalog')
+        }
+    })
+    .catch(err=>{
+        res.redirect('/catalog')
+    })
 };
 
 // Handle Author create on POST.

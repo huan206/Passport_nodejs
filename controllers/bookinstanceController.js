@@ -2,6 +2,8 @@ var BookInstance = require('../models/bookinstance');
 var Book = require('../models/book');
 const { body,validationResult, Result } = require('express-validator');
 const { default: async } = require('async');
+const storage = require('node-persist');
+
 // Display list of all BookInstances.
 exports.bookinstance_list = function(req, res) {
     BookInstance.find()
@@ -9,7 +11,13 @@ exports.bookinstance_list = function(req, res) {
     .exec(function (err, list_bookinstances) {
       if (err) { return next(err); }
       // Successful, so render
-      res.render('./bookinstance_view/bookinstance_list.pug', { title: 'Book Instance List', bookinstance_list: list_bookinstances });
+      storage.getItem('role').then(r =>{
+        res.render('./bookinstance_view/bookinstance_list.pug', { title: 'Book Instance List', bookinstance_list: list_bookinstances,role:r });
+      })
+      .catch(err=>{
+        res.render('./bookinstance_view/bookinstance_list.pug', { title: 'Book Instance List', bookinstance_list: list_bookinstances });
+      })
+      
     });
 };
 
@@ -25,7 +33,13 @@ exports.bookinstance_detail = function(req, res) {
           return next(err);
         }
       // Successful, so render.
-      res.render('./bookinstance_view/bookinstance_detail.pug', { title: 'Copy: '+bookinstance.book.title, bookinstance:  bookinstance});
+      storage.getItem('role').then(r =>{
+            res.render('./bookinstance_view/bookinstance_detail.pug', { title: 'Copy: '+bookinstance.book.title, bookinstance:  bookinstance,role:r});
+        })
+        .catch(err=>{
+            res.render('./bookinstance_view/bookinstance_detail.pug', { title: 'Copy: '+bookinstance.book.title, bookinstance:  bookinstance});
+        })
+     
     })
 };
 
@@ -35,7 +49,18 @@ exports.bookinstance_create_get = function(req, res) {
     .exec(function (err, books) {
       if (err) { return next(err); }
       // Successful, so render.
-      res.render('./bookinstance_view/bookinstance_form.pug', {title: 'Create BookInstance', book_list: books});
+      storage.getItem('role').then(r =>{
+        if(r=="admin"){
+            res.render('./bookinstance_view/bookinstance_form.pug', {title: 'Create BookInstance', book_list: books});
+        }
+        else{
+            res.redirect('/catalog')
+        }
+        })
+        .catch(err=>{
+            res.redirect('/catalog')
+        })
+      
     });
 };
 

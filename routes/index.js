@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var user_controller = require('../controllers/userController');
+
 router.get('/', user_controller.checkAuthenticated, user_controller.homepage);
 
 router.get('/login', user_controller.checkNotAuthenticated, user_controller.login);
