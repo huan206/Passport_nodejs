@@ -17,9 +17,10 @@
         <input type="text" placeholder="Username" name="username" id="name_signup" />
         <input type="email" placeholder="Email address" name="email" id="email_signup" />
         <input type="password" placeholder="Password" name="password" id="password_signup" />
-        <% if(err){ %> 
-          <small ><%= err %> </small>
-        <%} %>
+        <input type="password" placeholder="Confirm Password" name="confirm password" id="password_signup" />
+        <% if(errors){ errors.forEach(function(err) { %> 
+          <small ><%= err.msg %> </small>
+        <%});} %>
         <div class="box">
           <button type="submit" id="sighUp">Create</button>
           <a class="btn-sub" style="display: flex; justify-content: center;" href="/login">Login</a>
