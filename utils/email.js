@@ -5,7 +5,7 @@
  const mailHost = 'smtp.gmail.com'
  const mailPort = 587
  
- const sendMail = (email, code) => {
+ const sendMail = (email, subject, view) => {
    const transporter = nodeMailer.createTransport({
      host: mailHost,
      port: mailPort,
@@ -19,8 +19,8 @@
    const options = {
      from: adminEmail,
      to: email, 
-     subject: "Email verify your account",
-     html: "<h1>Welcome</h1><p>This is code for verify: "+ code +" </p>"  
+     subject: subject,
+     html: view   
    }
    console.log("sended");
    return transporter.sendMail(options)
