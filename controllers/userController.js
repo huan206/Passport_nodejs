@@ -62,7 +62,7 @@ passport.use(new LocalStrategy(
 passport.use(new GoogleStrategy({
     clientID: '781009823760-7ekibvct2t9h9gus4t3cifc2mshljp0k.apps.googleusercontent.com',
     clientSecret: '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',
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "https://library-myapplication.herokuapp.com/auth/google/callback"
 },
     function (accessToken, refreshToken, profile, cb) {
         User.findOne({ googleID: profile.id })
@@ -91,7 +91,7 @@ passport.use(new GoogleStrategy({
 passport.use(new FaceBookStrategy({
     clientID: "1721561728034335",
     clientSecret: "312b7a5f083d960656acfc377168bcae",
-    callbackURL: "http://localhost:3000/auth/facebook/callback"
+    callbackURL: "https://library-myapplication.herokuapp.com/auth/facebook/callback"
 },
     function (accessToken, refreshToken, profile, cb) {
         User.findOne({ facebookID: profile.id })
@@ -118,7 +118,7 @@ passport.use(new FaceBookStrategy({
 passport.use(new GitHubStrategy({
     clientID: '30652d0be1f68699a02c',
     clientSecret: '314916719c3b4291014f8da71e1475fedd8a9f3f',
-    callbackURL: 'http://localhost:3000/auth/github/callback'
+    callbackURL: 'https://library-myapplication.herokuapp.com/auth/github/callback'
 },
     function (accessToken, refreshToken, profile, cb) {
         User.findOne({ githubID: profile.id })
